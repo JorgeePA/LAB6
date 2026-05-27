@@ -1,0 +1,38 @@
+name: Test de la Custom Action
+
+on: [push]
+
+jobs:
+  probar-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ejecutar mi custom action
+        id: mi-version
+        uses: ./
+        with:
+          tipo-release: 'minor'
+          prefijo: 'v'
+
+      - name: Mostrar outputs
+        run: |
+          echo "Versión: ${{ steps.mi-version.outputs.version }}"
+          echo "Versión con fecha: ${{ steps.mi-version.outputs.version-con-fecha }}"
+          echo "Es válido: ${{ steps.mi-version.outputs.es-valido }}"
+
+  probar-input-invalido:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Probar con input inválido
+        id: version-mala
+        uses: ./
+        with:
+          tipo-release: 'inventado'
+        continue-on-error: true
+
+      - name: Verificar que falló correctamente
+        run: |
+          echo "Válido: ${{ steps.version-mala.outputs.es-valido }}"

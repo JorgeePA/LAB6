@@ -1,0 +1,28 @@
+name: 'Generador de Versión'
+description: 'Genera una versión semántica basada en el tipo de release y la fecha'
+
+branding:
+  icon: 'tag'
+  color: 'blue'
+
+inputs:
+  tipo-release:
+    description: 'Tipo de release: major, minor o patch'
+    required: true
+    default: 'patch'
+  prefijo:
+    description: 'Prefijo para la versión, por ejemplo v'
+    required: false
+    default: 'v'
+
+outputs:
+  version:
+    description: 'Versión generada en formato semántico'
+  version-con-fecha:
+    description: 'Versión generada con fecha incluida'
+  es-valido:
+    description: 'true si el input era válido, false si no'
+
+runs:
+  using: 'node20'
+  main: 'index.js'
